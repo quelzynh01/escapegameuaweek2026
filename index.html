@@ -2,306 +2,68 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Cadeado I</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nada Aqui</title>
+
 <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-  /* ============================================================
-     PARA CRIAR OS PRÓXIMOS 8 CADEADOS, MEXA SÓ NO BLOCO "CONFIG"
-     lá no final do <script>. Tudo (símbolo, palavra, texto final)
-     é escolhido ali. Nada de HTML/CSS precisa ser tocado.
-     ============================================================ */
+    body{
+        background: linear-gradient(180deg,#111,#1d1d1d);
+        color:#fff;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        padding:20px;
+    }
 
-  :root{
-    --couro-escuro:#1c140f;
-    --couro:#2b1e15;
-    --pergaminho:#e9dcbd;
-    --pergaminho-escuro:#cbb98d;
-    --bronze:#a9793f;
-    --bronze-claro:#d1a35f;
-    --sombra: rgba(0,0,0,.55);
-  }
+    .container{
+        width:100%;
+        max-width:400px;
+    }
 
-  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+    h1{
+        font-size:2rem;
+        margin-bottom:15px;
+    }
 
-  html,body{
-    margin:0;
-    min-height:100dvh;
-    background:
-      radial-gradient(ellipse at 50% -10%, #3a2a1c 0%, transparent 60%),
-      var(--couro-escuro);
-    font-family: Georgia, 'Times New Roman', serif;
-    color: var(--pergaminho);
-  }
+    p{
+        font-size:1.1rem;
+        color:#cfcfcf;
+        line-height:1.6;
+    }
 
-  body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:100dvh;
-    padding: 20px 16px;
-  }
+    .emoji{
+        font-size:4rem;
+        margin-bottom:20px;
+    }
 
-  body::before{
-    content:"";
-    position:fixed; inset:0;
-    background-image:
-      repeating-linear-gradient(115deg, rgba(255,255,255,.015) 0px, transparent 2px, transparent 4px),
-      repeating-linear-gradient(25deg, rgba(0,0,0,.12) 0px, transparent 2px, transparent 5px);
-    pointer-events:none;
-  }
+    @media (max-width:480px){
+        h1{
+            font-size:1.8rem;
+        }
 
-  .card{
-    position:relative;
-    width:100%;
-    max-width: 380px;
-    background: linear-gradient(180deg, var(--couro) 0%, #21160f 100%);
-    border: 1px solid rgba(169,121,63,.35);
-    border-radius: 8px;
-    padding: 32px 20px 28px;
-    box-shadow:
-      0 24px 50px -18px var(--sombra),
-      inset 0 0 50px rgba(0,0,0,.4);
-  }
-
-  .card::before, .card::after{
-    content:"";
-    position:absolute;
-    width:12px; height:12px;
-    border: 1px solid var(--bronze);
-    opacity:.6;
-  }
-  .card::before{ top:9px; left:9px; border-right:none; border-bottom:none;}
-  .card::after{ bottom:9px; right:9px; border-left:none; border-top:none;}
-
-  .eyebrow{
-    text-align:center;
-    font-size: 10.5px;
-    letter-spacing: 3.5px;
-    color: var(--bronze-claro);
-    text-transform:uppercase;
-    margin-bottom: 4px;
-    opacity:.85;
-  }
-
-  h1{
-    text-align:center;
-    font-size: 22px;
-    letter-spacing: 1.5px;
-    margin: 0 0 20px;
-    color: var(--pergaminho);
-    text-shadow: 0 2px 6px rgba(0,0,0,.5);
-  }
-
-  .symbol-wrap{
-    width: 92px; height: 92px;
-    margin: 0 auto 22px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #4a3623, #1a120b 75%);
-    border: 2px solid var(--bronze);
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:
-      0 0 0 5px rgba(169,121,63,.12),
-      inset 0 0 16px rgba(0,0,0,.6);
-    transition: box-shadow .5s ease, transform .5s ease;
-  }
-  .symbol-wrap.unlocked{
-    box-shadow:
-      0 0 0 5px rgba(169,121,63,.25),
-      0 0 28px 6px rgba(209,163,95,.5),
-      inset 0 0 16px rgba(0,0,0,.4);
-    transform: scale(1.05);
-  }
-
-  #symbol{ width:46px; height:46px; }
-  #symbol path, #symbol line, #symbol circle, #symbol polygon{
-    stroke: var(--bronze-claro);
-  }
-
-  .boxes{
-    display:flex;
-    gap: 7px;
-    justify-content:center;
-    flex-wrap: wrap;
-    margin-bottom: 22px;
-  }
-
-  .boxes input{
-    width: 15vw;
-    max-width: 44px;
-    min-width: 32px;
-    aspect-ratio: 3 / 4;
-    text-align:center;
-    font-size: 19px;
-    color: var(--pergaminho);
-    background: rgba(0,0,0,.28);
-    border: 1px solid rgba(169,121,63,.5);
-    border-radius: 5px;
-    text-transform: uppercase;
-    outline:none;
-    -webkit-appearance:none;
-    transition: border-color .2s, box-shadow .2s;
-  }
-  .boxes input:focus{
-    border-color: var(--bronze-claro);
-    box-shadow: 0 0 0 3px rgba(209,163,95,.18);
-  }
-  .boxes.shake{ animation: shake .4s; }
-  @keyframes shake{
-    0%,100%{transform:translateX(0);}
-    20%{transform:translateX(-6px);}
-    40%{transform:translateX(6px);}
-    60%{transform:translateX(-4px);}
-    80%{transform:translateX(4px);}
-  }
-
-  button#unlock{
-    display:block;
-    width: 100%;
-    margin: 0 auto;
-    padding: 15px 0;
-    background: linear-gradient(180deg, var(--bronze-claro), var(--bronze));
-    color: #241708;
-    border: none;
-    border-radius: 5px;
-    font-size: 13px;
-    font-weight:bold;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    cursor:pointer;
-    box-shadow: 0 6px 14px -4px rgba(0,0,0,.6);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  button#unlock:active{ transform: translateY(1px); }
-
-  .feedback{
-    text-align:center;
-    min-height: 18px;
-    margin-top: 14px;
-    font-size: 12.5px;
-    letter-spacing: .3px;
-  }
-  .feedback.err{ color:#d97a63; }
-
-  .result{
-    display:none;
-    text-align:center;
-    margin-top: 6px;
-  }
-  .result.show{ display:block; animation: fadein .6s ease; }
-  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-  .result .selo{
-    font-size: 14px;
-    letter-spacing: 1.5px;
-    color: var(--bronze-claro);
-  }
-  .result p{
-    font-size: 13px;
-    color: var(--pergaminho-escuro);
-    font-style: italic;
-    margin: 6px 0 0;
-    line-height:1.6;
-  }
-
+        p{
+            font-size:1rem;
+        }
+    }
 </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="eyebrow">Escape Game · UAWEEK 2026</div>
-    <h1 id="lockLabel">Cadeado I</h1>
-
-    <div class="symbol-wrap" id="symbolWrap">
-      <svg id="symbol" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="4" stroke-linecap="round"></svg>
-    </div>
-
-    <div class="boxes" id="boxes"></div>
-
-    <button id="unlock">Abrir</button>
-    <div class="feedback" id="feedback"></div>
-
-    <div class="result" id="result">
-      <div class="selo">✦ Selo Rompido ✦</div>
-      <p id="successText"></p>
-    </div>
-  </div>
-
-<script>
-  // ============ ÚNICO LUGAR QUE PRECISA MUDAR POR CADEADO ============
-  const CONFIG = {
-    lockLabel: "Cadeado I",
-    answer: "ALJAVA",
-
-    // símbolo: cole aqui só o miolo do SVG (paths/lines/circles),
-    // mantendo o mesmo estilo de traço dos outros
-    symbol: `
-      <circle cx="60" cy="60" r="32" />
-      <line x1="40" y1="40" x2="80" y2="80" />
-      <line x1="80" y1="40" x2="40" y2="80" />
-`,
-
-    // texto mostrado só DEPOIS de abrir o cadeado
-    successText: "Galatas 2-6"
-  };
-  // =====================================================================
-
-  document.getElementById('lockLabel').textContent = CONFIG.lockLabel;
-  document.getElementById('symbol').innerHTML = CONFIG.symbol;
-  document.getElementById('successText').textContent = CONFIG.successText;
-
-  const boxesEl = document.getElementById('boxes');
-  const letters = CONFIG.answer.split('');
-  const inputs = [];
-
-  letters.forEach((_, i) => {
-    const inp = document.createElement('input');
-    inp.maxLength = 1;
-    inp.autocomplete = 'off';
-    inp.autocapitalize = 'characters';
-    inp.spellcheck = false;
-    inp.inputMode = 'text';
-    inp.dataset.index = i;
-    boxesEl.appendChild(inp);
-    inputs.push(inp);
-
-    inp.addEventListener('input', () => {
-      inp.value = inp.value.toUpperCase().replace(/[^A-ZÀ-Ú]/g, '');
-      if (inp.value && i < letters.length - 1) inputs[i + 1].focus();
-    });
-    inp.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !inp.value && i > 0) inputs[i - 1].focus();
-      if (e.key === 'Enter') tryUnlock();
-    });
-  });
-
-  const feedback = document.getElementById('feedback');
-  const result = document.getElementById('result');
-  const symbolWrap = document.getElementById('symbolWrap');
-
-  function normalize(s){
-    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
-  }
-
-  function tryUnlock(){
-    const typed = inputs.map(i => i.value).join('');
-    if (normalize(typed) === normalize(CONFIG.answer)) {
-      feedback.textContent = '';
-      symbolWrap.classList.add('unlocked');
-      result.classList.add('show');
-      inputs.forEach(i => i.disabled = true);
-      document.getElementById('unlock').disabled = true;
-    } else {
-      feedback.textContent = 'Ainda não é isso.';
-      feedback.className = 'feedback err';
-      boxesEl.classList.remove('shake');
-      void boxesEl.offsetWidth;
-      boxesEl.classList.add('shake');
-    }
-  }
-
-  document.getElementById('unlock').addEventListener('click', tryUnlock);
-</script>
+<div class="container">
+    <div class="emoji">👀</div>
+    <h1>Não tem nada aqui...</h1>
+    <p>Você está olhando no lugar errado.<br>
+    Procure nos outros.</p>
+</div>
 
 </body>
 </html>
